@@ -63,3 +63,12 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 fastlane/readme.md
+gradlew
+gradlew.bat
+dbnavigator.xml
+encodings.xml
+misc.xml
+modules.xml
+runConfigurations.xml
+vcs.xml
+Project.xml
