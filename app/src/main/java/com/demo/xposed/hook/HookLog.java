@@ -25,7 +25,7 @@ public class HookLog {
              }
              if (aClass1 != null){
 
-                    XposedHelpers.findAndHookMethod(aClass1, "v", String.class, String.class,  Object[].class,new XC_MethodHook() {
+                    /*XposedHelpers.findAndHookMethod(aClass1, "v", String.class, String.class,  Object[].class,new XC_MethodHook() {
                         @Override
                         protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                             StringBuffer sb = new StringBuffer();
@@ -48,7 +48,7 @@ public class HookLog {
                             super.beforeHookedMethod(param);
 
                         }
-                    });
+                    });*/
 
                     XposedHelpers.findAndHookMethod(aClass1, "i", String.class, String.class,
                             Object[].class,new XC_MethodHook() {
@@ -104,7 +104,7 @@ public class HookLog {
                     });
 
 
-                    XposedHelpers.findAndHookMethod(aClass1, "w", String.class, String.class,  Object[].class,new XC_MethodHook() {
+                    /*XposedHelpers.findAndHookMethod(aClass1, "w", String.class, String.class,  Object[].class,new XC_MethodHook() {
                         @Override
                         protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                             StringBuffer sb = new StringBuffer();
@@ -153,7 +153,7 @@ public class HookLog {
                             super.beforeHookedMethod(param);
 
                         }
-                    });
+                    });*/
                 }
 
         }

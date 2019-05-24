@@ -3,6 +3,7 @@ package com.demo.xposed.hook;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ListAdapter;
 
 import java.util.Iterator;
 
@@ -12,7 +13,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 public class HookUI {
     private static final String TAG = HookUI.class.getSimpleName();
-    public static void hook(XC_LoadPackage.LoadPackageParam loadPackageParam){
+    public static void hook(final XC_LoadPackage.LoadPackageParam loadPackageParam){
         XposedHelpers.findAndHookMethod("android.app.Activity", loadPackageParam.classLoader, "startActivity", Intent.class, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
@@ -35,10 +36,36 @@ public class HookUI {
                 }
             }
 
+        });
+
+        //打印出adapter的类名（BaseAdapter为抽象类不能hook）
+        XposedHelpers.findAndHookMethod("android.widget.ListView", loadPackageParam.classLoader, "setAdapter", ListAdapter.class, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 super.afterHookedMethod(param);
+                Log.e(TAG,"adapter类名："+param.args[0].getClass().getName());
             }
         });
+
+        //对话列表ListView数据变化
+        XposedHelpers.findAndHookMethod("com.tencent.mm.ui.conversation.h", loadPackageParam.classLoader, "notifyDataSetChanged", new XC_MethodHook() {
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                super.afterHookedMethod(param);
+                Log.e(TAG,"conversation数据变更");
+                Object arg = param.args[10];
+            }
+        });
+
+        //窗口对话ListView数据变化
+        XposedHelpers.findAndHookMethod("com.tencent.mm.ui.chatting.a.a", loadPackageParam.classLoader, "notifyDataSetChanged", new XC_MethodHook() {
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                super.afterHookedMethod(param);
+                Log.e(TAG,"chatting数据变更");
+                Object arg = param.args[10];
+            }
+        });
+
     }
 }

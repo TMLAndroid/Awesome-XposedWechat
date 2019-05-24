@@ -3,6 +3,7 @@ package com.demo.xposed;
 import android.app.Application;
 import android.content.Context;
 
+import com.demo.xposed.hook.HookDB;
 import com.demo.xposed.hook.HookLog;
 import com.demo.xposed.hook.HookUI;
 
@@ -32,6 +33,7 @@ public class Main implements IXposedHookLoadPackage {
                     if ( (methodHookParam.thisObject instanceof Application)) {
                     HookLog.hook(loadPackageParam);
                     HookUI.hook(loadPackageParam);
+                    HookDB.getInstance().hook(loadPackageParam);
             }
         }
     });
